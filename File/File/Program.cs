@@ -1,8 +1,44 @@
 ﻿
 using System.Collections.Generic;
+using System.IO;
 using System.Xml.Linq;
 using File;
 using Newtonsoft.Json;
+
+DirectoryInfo di = new DirectoryInfo("/Users/elmar/Desktop/CodeAcademy/Homeworks/File/File/File/Files");
+Console.WriteLine(di.FullName);
+Console.WriteLine(di.CreationTime);
+Console.WriteLine(di.GetFiles());
+Console.WriteLine(di.Name);
+Console.WriteLine(di.LastAccessTime);
+Console.WriteLine(di.Parent);
+Console.WriteLine(di.GetFiles().Length);
+Console.WriteLine(di.GetDirectories().Length);
+Console.WriteLine("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
+FileInfo fi = new FileInfo("/Users/elmar/Desktop/CodeAcademy/Homeworks/File/File/File/Files/person.json");
+Console.WriteLine("Fullname: " + fi.FullName);
+Console.WriteLine("Name: " + fi.Name);
+Console.WriteLine("Creation time: " + fi.CreationTime);
+Console.WriteLine("Last access time: " + fi.LastAccessTime);
+Console.WriteLine("Length: " + fi.Length);
+Console.WriteLine("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
+foreach (var item in di.GetFiles())
+{
+    if (item.Length != 0)
+    {
+        Console.WriteLine(item.Name);
+    }
+}
+Console.WriteLine("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
+FileStream fd = new FileStream("/Users/elmar/Desktop/CodeAcademy/Homeworks/File/File/File/Files/person.json", FileMode.Open);
+StreamReader sr = new StreamReader(fd);
+var line = sr.ReadLine();
+while (line != null)
+{
+    Console.WriteLine(line);
+    line = sr.ReadLine();
+}
+fd.Close();
 
 //Person person = null;
 //person = new Person
@@ -10,7 +46,6 @@ using Newtonsoft.Json;
 //    Fullname = "elmar qarayev",
 //    Age = 15
 //};
-
 //Serialize(person);
 //person=Deserialize();
 //Console.WriteLine(person);
