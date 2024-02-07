@@ -7,17 +7,40 @@ using Newtonsoft.Json;
 using System.Text.Json;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
+#region Practice
 HttpClient httpClient1 = new HttpClient();
 
 var response = httpClient1.GetStringAsync("https://jsonplaceholder.typicode.com/albums").Result;
 
 List<Albums> albums = JsonSerializer.Deserialize<List<Albums>>(response);
 
-foreach (var item in albums)
-{
-    Console.WriteLine(item.Title);
+//foreach (var item in albums)
+//{
+//    Console.WriteLine(item.Title);
 
+//}
+title:
+Console.WriteLine("axtaracaginiz titleni daxil edin:");
+string title = Console.ReadLine();
+if (String.IsNullOrWhiteSpace(title))
+{
+    Console.WriteLine("duzgun daxil edin!");
+    goto title;
 }
+bool check = false;
+foreach (var item in albums) //title= for examle, ==>> omnis laborum odio
+{
+    if (title == item.Title)
+    {
+        Console.WriteLine(item);
+        check = true;
+    }
+}
+if (!check)
+{
+    Console.WriteLine("title movcud deyil");
+}
+
 
 //Task.Run(() =>
 //{
@@ -47,6 +70,9 @@ async Task ShowGoogleSrcAsync()
     var result = await httpClient.GetStringAsync("https://www.google.com/?client=safari&channel=mac_bm.tr");
     Console.WriteLine(result);
 }
+#endregion
+
+#region File
 
 DirectoryInfo di = new DirectoryInfo("/Users/elmar/Desktop/CodeAcademy/Homeworks/File/File/File/Files");
 Console.WriteLine(di.FullName);
@@ -93,43 +119,6 @@ fd.Close();
 //person=Deserialize();
 //Console.WriteLine(person);
 
-List<Person> lp = new List<Person>();
-
-FileInfo fl = new FileInfo("/Users/elmar/Desktop/CodeAcademy/Homeworks/File/File/File/Files/personlist.json");
-
-if (!fl.Exists)
-{
-    Console.WriteLine("axtardiginiz fayl yoxdur , yaradilsinmi? y/n");
-    string secim1 = Console.ReadLine();
-    if (secim1 == "y")
-    {
-        var fs = fl.Create();
-        fs.Close();
-    }
-    else
-    {
-        return;
-    }
-}
-SerializePersonList(lp);
-string secim;
-do
-{
-    Console.WriteLine("1.person yarat\n2.personlara bax");
-    secim = Console.ReadLine();
-    switch (secim)
-    {
-        case "1":
-            AddPerson();
-            break;
-        case "2":
-            LookPerson();
-            break;
-        default:
-            Console.WriteLine("secim yanlisdir!");
-            break;
-    }
-} while (secim != "0");
 void Serialize(Person person)
 {
     using (FileStream fs = new FileStream("/Users/elmar/Desktop/CodeAcademy/Homeworks/File/File/File/Files/person.json", FileMode.Create))
@@ -153,6 +142,54 @@ Person Deserialize()
     return person;
 }
 
+#endregion
+
+#region task
+
+
+List<Person> lp = new List<Person>();
+
+FileInfo fl = new FileInfo("/Users/elmar/Desktop/CodeAcademy/Homeworks/File/File/File/Files/personlist.json");
+
+if (!fl.Exists)
+{
+    Console.WriteLine("axtardiginiz fayl yoxdur , yaradilsinmi? y/n");
+    string secim1 = Console.ReadLine();
+    if (secim1 == "y")
+    {
+        var fs = fl.Create();
+        fs.Close();
+    }
+    else
+    {
+        return;
+    }
+}
+string secim;
+//SerializePersonList(lp);
+do
+{
+    lp = DeserializePersonList();
+
+    Console.WriteLine("1.person yarat\n2.personlara bax\n0.exit");
+    secim = Console.ReadLine();
+    switch (secim)
+    {
+        case "1":
+            AddPerson();
+            break;
+        case "2":
+            LookPerson();
+            break;
+        case "0":
+            Console.WriteLine("Programdan cixildi!");
+            break;
+        default:
+            Console.WriteLine("secim yanlisdir!");
+            break;
+    }
+} while (secim != "0");
+
 static void SerializePersonList(List<Person> personList)
 {
     using (FileStream fs = new FileStream("/Users/elmar/Desktop/CodeAcademy/Homeworks/File/File/File/Files/personlist.json", FileMode.Create))
@@ -163,7 +200,6 @@ static void SerializePersonList(List<Person> personList)
         sw.Close();
     }
 }
-
 static List<Person> DeserializePersonList()
 {
     List<Person> personList = null;
@@ -174,6 +210,7 @@ static List<Person> DeserializePersonList()
         personList = JsonConvert.DeserializeObject<List<Person>>(jsonStr);
     }
     return personList;
+
 }
 void AddPerson()
 {
@@ -199,7 +236,6 @@ age:
         Fullname = fullname,
         Age = age
     };
-    lp = DeserializePersonList();
     lp.Add(person1);
     SerializePersonList(lp);
 }
@@ -211,5 +247,8 @@ void LookPerson()
         Console.WriteLine(item);
     }
 }
+#endregion
+
 Console.ReadLine();
+
 

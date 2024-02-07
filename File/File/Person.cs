@@ -11,7 +11,6 @@ namespace File
         {
             return $"{Fullname}-{Age}";
         }
-    }
-	
+    }	
 }
 
