@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "XAYaO5x/W19cxvXgM4cHO9zUdpM3Ai9+DXZfURruiJp+4UF6uM0WTrV9bao1rbAalDkERD9g08LHDZSDrLh5mw==",
+  "success": true,
+  "projectFilePath": "/Users/elmar/Desktop/CodeAcademy/Homeworks/File/File/File/File.csproj",
+  "expectedPackageFiles": [
+    "/Users/elmar/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
