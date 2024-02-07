@@ -4,6 +4,49 @@ using System.IO;
 using System.Xml.Linq;
 using File;
 using Newtonsoft.Json;
+using System.Text.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
+
+HttpClient httpClient1 = new HttpClient();
+
+var response = httpClient1.GetStringAsync("https://jsonplaceholder.typicode.com/albums").Result;
+
+List<Albums> albums = JsonSerializer.Deserialize<List<Albums>>(response);
+
+foreach (var item in albums)
+{
+    Console.WriteLine(item.Title);
+
+}
+
+//Task.Run(() =>
+//{
+//    for (int i = 0; i < 200; i++)
+//    {
+//        Console.WriteLine(i+" ");
+//    }
+//});
+
+HttpClient httpClient = new HttpClient();
+//var task = GetGoogleSrc().ContinueWith(a => Console.WriteLine(a.Result));
+
+//var task = ShowGoogleSrcAsync();
+
+Task<string> GetGoogleSrc()
+{
+    var temp = Task<string>.Run(() =>
+    {
+
+        var result = httpClient.GetStringAsync("https://www.google.com/?client=safari&channel=mac_bm.tr").Result;
+        return result;
+    });
+    return temp;
+}
+async Task ShowGoogleSrcAsync()
+{
+    var result = await httpClient.GetStringAsync("https://www.google.com/?client=safari&channel=mac_bm.tr");
+    Console.WriteLine(result);
+}
 
 DirectoryInfo di = new DirectoryInfo("/Users/elmar/Desktop/CodeAcademy/Homeworks/File/File/File/Files");
 Console.WriteLine(di.FullName);
@@ -65,7 +108,7 @@ if (!fl.Exists)
     }
     else
     {
-      return;
+        return;
     }
 }
 SerializePersonList(lp);
@@ -86,8 +129,7 @@ do
             Console.WriteLine("secim yanlisdir!");
             break;
     }
-} while (secim!="0");
-
+} while (secim != "0");
 void Serialize(Person person)
 {
     using (FileStream fs = new FileStream("/Users/elmar/Desktop/CodeAcademy/Homeworks/File/File/File/Files/person.json", FileMode.Create))
@@ -98,6 +140,7 @@ void Serialize(Person person)
         sw.Close();
     }
 }
+
 Person Deserialize()
 {
     Person person = null;
@@ -109,6 +152,7 @@ Person Deserialize()
     }
     return person;
 }
+
 static void SerializePersonList(List<Person> personList)
 {
     using (FileStream fs = new FileStream("/Users/elmar/Desktop/CodeAcademy/Homeworks/File/File/File/Files/personlist.json", FileMode.Create))
@@ -130,23 +174,22 @@ static List<Person> DeserializePersonList()
         personList = JsonConvert.DeserializeObject<List<Person>>(jsonStr);
     }
     return personList;
-
 }
 void AddPerson()
 {
-    full:
+full:
     Console.WriteLine("ad soyad daxil edin:");
     string fullname = Console.ReadLine();
-    if (String.IsNullOrWhiteSpace(fullname)|| !fullname.CheckFullname())
+    if (String.IsNullOrWhiteSpace(fullname) || !fullname.CheckFullname())
     {
         Console.WriteLine("duzgun daxil edin!");
         goto full;
     }
-    age:
+age:
     Console.WriteLine("age daxil edin:");
     string ageStr = Console.ReadLine();
     int age;
-    if (!int.TryParse(ageStr, out age)|| age<=0)
+    if (!int.TryParse(ageStr, out age) || age <= 0)
     {
         Console.WriteLine("duzgun daxil edin!");
         goto age;
@@ -155,7 +198,6 @@ void AddPerson()
     {
         Fullname = fullname,
         Age = age
-
     };
     lp = DeserializePersonList();
     lp.Add(person1);
