@@ -7,7 +7,7 @@ namespace File
 		[JsonPropertyName("userId")]
 		public int UserId { get; set; }
 
-	     [JsonPropertyName("Id")]
+	     [JsonPropertyName("id")]
 		public int Id { get; set; }
 
 		[JsonPropertyName("title")]

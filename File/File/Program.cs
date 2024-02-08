@@ -28,9 +28,9 @@ if (String.IsNullOrWhiteSpace(title))
     goto title;
 }
 bool check = false;
-foreach (var item in albums) //title= for examle, ==>> omnis laborum odio
+foreach (var item in albums) //title= for example, ==>> omnis laborum odio
 {
-    if (title == item.Title)
+    if (item.Title==title)
     {
         Console.WriteLine(item);
         check = true;
@@ -141,7 +141,6 @@ Person Deserialize()
     }
     return person;
 }
-
 #endregion
 
 #region task
